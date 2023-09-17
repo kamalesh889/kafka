@@ -3,7 +3,7 @@ package model
 import "time"
 
 type User struct {
-	Id        uint64 `gorm:"primaryKey;autoIncrement"`
+	Id        uint64 `gorm:"primaryKey"`
 	Name      string
 	Mobile    string
 	Latitude  string
