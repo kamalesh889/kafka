@@ -1,6 +1,9 @@
 package api
 
 import (
+	"Kafka/model"
+	"log"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -18,5 +21,24 @@ func InitializeDB() (*Database, error) {
 		return nil, err
 	}
 
+	// There should be a variable in config to check that we need to migrate or not
+
+	isMigrate := true // Here i am taking default value as true
+	if isMigrate {
+		Migrate(db)
+	}
+
 	return &Database{db}, nil
+}
+
+func Migrate(db *gorm.DB) {
+
+	err := db.AutoMigrate(
+		&model.User{}, &model.Image{},
+	)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 }

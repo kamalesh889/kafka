@@ -21,8 +21,6 @@ func main() {
 		log.Panicln("Error in creating server:", err)
 	}
 
-	fmt.Println("Server is", server)
-
 	mux := api.Router(server)
 	http.Handle("/", mux)
 	http.ListenAndServe(fmt.Sprintf(":%s", "8080"), mux)
