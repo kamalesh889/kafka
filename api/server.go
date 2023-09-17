@@ -1,6 +1,7 @@
 package api
 
 import (
+	"Kafka/model"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -8,11 +9,11 @@ import (
 
 type server struct {
 	router     *mux.Router
-	db         *Database
+	db         *model.Database
 	httpClient *http.Client
 }
 
-func NewServer(db *Database) (*server, error) {
+func NewServer(db *model.Database) (*server, error) {
 
 	s := &server{}
 

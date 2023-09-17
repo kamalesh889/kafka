@@ -8,11 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Database struct {
-	DbConn *gorm.DB
-}
-
-func InitializeDB() (*Database, error) {
+func InitializeDB() (*model.Database, error) {
 
 	// These configs should be coming from enviroment variable , Here i have hard coded for the demonstration
 
@@ -28,7 +24,7 @@ func InitializeDB() (*Database, error) {
 		Migrate(db)
 	}
 
-	return &Database{db}, nil
+	return &model.Database{DbConn: db}, nil
 }
 
 func Migrate(db *gorm.DB) {
