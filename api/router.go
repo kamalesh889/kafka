@@ -8,7 +8,7 @@ func Router(s *server) *mux.Router {
 
 	r.HandleFunc("/start", s.start).Methods("GET")
 	r.HandleFunc("/create-user", s.createUser).Methods("POST")
-	r.HandleFunc("/crate-product", s.createProduct).Methods("POST")
+	r.HandleFunc("/create-product", s.createProduct).Methods("POST")
 
 	return r
 

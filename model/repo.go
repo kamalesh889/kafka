@@ -13,6 +13,7 @@ func (db *Database) CreateUser(userDetails *User) (uint64, error) {
 	result := db.DbConn.Create(userDetails)
 	if result.Error != nil {
 		log.Println("Error in creating the user", result.Error)
+		return 0, result.Error
 	}
 
 	userid := userDetails.Id
@@ -26,6 +27,7 @@ func (db *Database) GetUser(userId uint64) error {
 	err := db.DbConn.First(&user, "id=?", userId).Error
 	if err != nil {
 		log.Println("Error in Fetching user details", err)
+		return err
 	}
 
 	return nil
@@ -36,6 +38,7 @@ func (db *Database) CreateProduct(productDetails *Product) (uint64, error) {
 	result := db.DbConn.Create(productDetails)
 	if result.Error != nil {
 		log.Println("Error in creating the product", result.Error)
+		return 0, result.Error
 	}
 
 	productId := productDetails.ProductId

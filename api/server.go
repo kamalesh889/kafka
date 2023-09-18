@@ -53,9 +53,9 @@ func NewKafkaProducer() *queue.KafkaProducer {
 
 func NewKafkaConsumer() *queue.KafkaConsumer {
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{brokerAddr},
-		Topic:     topic,
-		Partition: 0,
+		Brokers: []string{brokerAddr},
+		Topic:   topic,
+		GroupID: "group-zocket",
 	})
 
 	return &queue.KafkaConsumer{

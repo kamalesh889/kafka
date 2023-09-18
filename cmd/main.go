@@ -21,6 +21,13 @@ func main() {
 		log.Panicln("Error in creating server:", err)
 	}
 
+	// starting a separate thread for the consumer
+	// we can create a differnt main file for the same
+
+	go func() {
+		server.GetProductFromKafka()
+	}()
+
 	mux := api.Router(server)
 	http.Handle("/", mux)
 	http.ListenAndServe(fmt.Sprintf(":%s", "8080"), mux)

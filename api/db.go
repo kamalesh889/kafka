@@ -12,7 +12,7 @@ func InitializeDB() (*model.Database, error) {
 
 	// These configs should be coming from enviroment variable , Here i have hard coded for the demonstration
 
-	db, err := gorm.Open(postgres.Open("postgres://postgres:kamalesh@localhost:5432/image"), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open("postgres://postgres:kamalesh@localhost:5432/zocket"), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}

@@ -20,6 +20,7 @@ func (p *KafkaProducer) WriteMessage(ctx context.Context, message kafka.Message)
 	err := p.Writer.WriteMessages(ctx, message)
 	if err != nil {
 		log.Println("Error in producing message to queue", err)
+		return err
 	}
 
 	return nil

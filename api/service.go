@@ -3,6 +3,8 @@ package api
 import (
 	"Kafka/model"
 	"context"
+	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -12,9 +14,12 @@ import (
 type Service interface {
 	CreateProduct(*ProductRequest) error
 	CreateUser(*UserRequest) (uint64, error)
+	GetProductFromKafka()
 }
 
 func (s *server) CreateProduct(productDetails *ProductRequest) error {
+
+	// Asuuming for creating prdouct , user should exists in our record
 
 	err := s.db.GetUser(productDetails.UserId)
 	if err != nil {
@@ -66,4 +71,19 @@ func (s *server) CreateUser(userDetails *UserRequest) (uint64, error) {
 	}
 
 	return userid, nil
+}
+
+func (s *server) GetProductFromKafka() {
+
+	for {
+
+		msg, err := s.consumer.ReadMessage(context.Background())
+		if err != nil {
+			log.Println(err)
+		}
+
+		fmt.Println("Msg is", string(msg.Value))
+
+	}
+
 }

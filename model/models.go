@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/lib/pq"
+)
 
 type User struct {
 	Id        uint64 `gorm:"primaryKey;autoIncrement"`
@@ -16,9 +20,9 @@ type Product struct {
 	ProductId               uint64 `gorm:"primaryKey;autoIncrement"`
 	ProductName             string
 	ProductDesc             string
-	ProductImages           []string `gorm:"type:varchar(255)[]"`
+	ProductImages           pq.StringArray `gorm:"type:text[]"`
 	ProductPrice            string
-	CompressedProductImages []string `gorm:"type:varchar(255)[]"`
+	CompressedProductImages pq.StringArray `gorm:"type:text[]"`
 	CreatedAt               time.Time
 	UpdatedAt               time.Time
 }

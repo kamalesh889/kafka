@@ -2,7 +2,6 @@ package queue
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/segmentio/kafka-go"
@@ -13,17 +12,16 @@ type KafkaConsumer struct {
 }
 
 type Consumer interface {
-	FetchMessage(ctx context.Context) (kafka.Message, error)
+	ReadMessage(ctx context.Context) (kafka.Message, error)
 }
 
-func (r *KafkaConsumer) FetchMessage(ctx context.Context) (kafka.Message, error) {
+func (r *KafkaConsumer) ReadMessage(ctx context.Context) (kafka.Message, error) {
 
-	msg, err := r.Reader.FetchMessage(ctx)
+	msg, err := r.Reader.ReadMessage(ctx)
 	if err != nil {
-		log.Println("Error in consuming message from queue", err)
+		log.Println("Error in Reading message from queue", err)
+		return kafka.Message{}, err
 	}
-
-	fmt.Println("Message is", msg)
 
 	return msg, nil
 }

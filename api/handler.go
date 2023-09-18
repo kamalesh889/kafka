@@ -31,8 +31,8 @@ func (s *server) createUser(w http.ResponseWriter, r *http.Request) {
 		Id:   userid,
 	}
 
-	json.NewEncoder(w).Encode(userresp)
 	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(userresp)
 
 }
 
