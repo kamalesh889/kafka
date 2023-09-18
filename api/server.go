@@ -11,10 +11,11 @@ import (
 
 type server struct {
 	router     *mux.Router
-	db         *model.Database
 	httpClient *http.Client
-	producer   *queue.KafkaProducer
-	consumer   *queue.KafkaConsumer
+	service    Service
+	db         model.Repository
+	producer   queue.Producer
+	consumer   queue.Consumer
 }
 
 const (
@@ -32,6 +33,8 @@ func NewServer(db *model.Database) (*server, error) {
 
 	s.producer = NewKafkaProducer()
 	s.consumer = NewKafkaConsumer()
+
+	s.service = s
 
 	return s, nil
 

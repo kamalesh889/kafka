@@ -20,9 +20,15 @@ func (s *server) createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	userid, err := s.service.CreateUser(&user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	userresp = UserResponse{
 		Name: user.Name,
-		Id:   1,
+		Id:   userid,
 	}
 
 	json.NewEncoder(w).Encode(userresp)
@@ -40,7 +46,7 @@ func (s *server) createProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = s.CreateProduct(&product)
+	err = s.service.CreateProduct(&product)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

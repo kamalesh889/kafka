@@ -3,7 +3,7 @@ package model
 import "time"
 
 type User struct {
-	Id        uint64 `gorm:"primaryKey"`
+	Id        uint64 `gorm:"primaryKey;autoIncrement"`
 	Name      string
 	Mobile    string
 	Latitude  string
@@ -12,7 +12,7 @@ type User struct {
 	UpdatedAt time.Time
 }
 
-type Image struct {
+type Product struct {
 	ProductId               uint64 `gorm:"primaryKey;autoIncrement"`
 	ProductName             string
 	ProductDesc             string

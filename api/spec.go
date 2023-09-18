@@ -1,8 +1,10 @@
 package api
 
 type UserRequest struct {
-	Name   string `json:"name"`
-	Mobile string `json:"mobile"`
+	Name      string `json:"name"`
+	Mobile    string `json:"mobile"`
+	Latitude  string `json:"latitide"`
+	Longitude string `json:"longitude"`
 }
 
 type UserResponse struct {

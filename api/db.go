@@ -30,7 +30,7 @@ func InitializeDB() (*model.Database, error) {
 func Migrate(db *gorm.DB) {
 
 	err := db.AutoMigrate(
-		&model.User{}, &model.Image{},
+		&model.User{}, &model.Product{},
 	)
 
 	if err != nil {
