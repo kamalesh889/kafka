@@ -11,11 +11,15 @@ import (
 
 type server struct {
 	router     *mux.Router
-	httpClient *http.Client
+	httpClient HTTPClient
 	service    Service
 	db         model.Repository
 	producer   queue.Producer
 	consumer   queue.Consumer
+}
+
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
 }
 
 const (
