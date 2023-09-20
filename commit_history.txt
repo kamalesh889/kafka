@@ -1,0 +1,77 @@
+commit 94d1484b5013a0f1dce0e204a011538286d0835f
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Wed Sep 20 16:51:42 2023 +0530
+
+    feat:Complete testcases and updated some changes
+
+commit 311916f6e0bb68b2b82950e9dc9468675c400bdb
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Tue Sep 19 14:27:08 2023 +0530
+
+    feat:add mock files for api package
+
+commit 7ebf5142a664020f8cc3736f269bedbef3e9acf9
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Tue Sep 19 14:25:12 2023 +0530
+
+    feat:add mock files for model package
+
+commit 368dde59b313d028f3f7fe52a5ad0775fc9313f7
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Tue Sep 19 14:22:54 2023 +0530
+
+    feat:generate mockfiles for kafka queue
+
+commit 945dc23642506f205a3ad1515ce3b3f1798b0ced
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Tue Sep 19 14:09:02 2023 +0530
+
+    feat:add image download and store functionality
+
+commit cdf4e0bbe11e0e3da2fb644e29dc4783f067de8d
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Mon Sep 18 23:21:10 2023 +0530
+
+    feat:implemnt consumer and bug fix in model
+
+commit eb4080f973eca51b8bc9fada4d648fadb0a18bfb
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Mon Sep 18 13:04:30 2023 +0530
+
+    feat:interface restructuring and add producer
+
+commit 32e5444aa860a3d7bbb267b9bac6c721ae81518b
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Sun Sep 17 21:20:54 2023 +0530
+
+    feat: structure added for kafka consumer&producer
+
+commit 6b262209058f09bb1e604848860fba06f605e9bb
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Sun Sep 17 20:00:19 2023 +0530
+
+    fix:restructuring db connection
+
+commit 5cf099c0955c262e7dc3662f22fc740f515bde66
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Sun Sep 17 19:47:05 2023 +0530
+
+    feat:handler setup complete
+
+commit 8cd5e630f7e233610b0e30da84b8435498fddf53
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Sun Sep 17 19:25:04 2023 +0530
+
+    feat:Model and migration setup
+
+commit e98b927f13b446ecfc4e87fb5bf31aa433e5d30c
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Sun Sep 17 19:03:04 2023 +0530
+
+    feat:initial setup complete
+
+commit 049a304d23f05eb9442a2a840fbaf7ddc7e3a5db
+Author: kamalesh889 <kamaleshmohapatra889@gmail.com>
+Date:   Fri Sep 15 23:41:15 2023 +0530
+
+    project setup
