@@ -24,8 +24,13 @@ func main() {
 	// starting a separate thread for the consumer
 	// we can create a differnt main file for the same
 
+	// true is for running enviroment
+	// false is for testing environment {we can get this from env varibale setup}
+
 	go func() {
-		server.GetProductFromKafka()
+		for {
+			server.GetProductFromKafka(true)
+		}
 	}()
 
 	mux := api.Router(server)

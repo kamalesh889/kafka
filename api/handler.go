@@ -5,11 +5,7 @@ import (
 	"net/http"
 )
 
-func (s *server) start(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func (s *server) createUser(w http.ResponseWriter, r *http.Request) {
+func (s *server) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	var user UserRequest
 	var userresp UserResponse
@@ -36,7 +32,7 @@ func (s *server) createUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (s *server) createProduct(w http.ResponseWriter, r *http.Request) {
+func (s *server) CreateProductHandler(w http.ResponseWriter, r *http.Request) {
 
 	var product ProductRequest
 

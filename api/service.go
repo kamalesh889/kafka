@@ -19,13 +19,15 @@ import (
 type Service interface {
 	CreateProduct(*ProductRequest) error
 	CreateUser(*UserRequest) (uint64, error)
-	GetProductFromKafka()
-	DownloadAndCompressImage(string, string) (string, error)
+	GetProductFromKafka(bool)
+	DownloadAndCompressImage(string, string, bool) (string, error)
 }
 
 const (
-	imagedownload  = "downloadimage"
-	compressedfile = "compressedimage"
+	imagedownload       = "downloadimage"
+	compressedimage     = "compressedimage"
+	testimagedownload   = "testdownloadimage"
+	testcompressedimage = "testcompressimage"
 )
 
 func (s *server) CreateProduct(productDetails *ProductRequest) error {
@@ -84,58 +86,68 @@ func (s *server) CreateUser(userDetails *UserRequest) (uint64, error) {
 	return userid, nil
 }
 
-func (s *server) GetProductFromKafka() {
+func (s *server) GetProductFromKafka(env bool) {
 
-	for {
-
-		msg, err := s.consumer.ReadMessage(context.Background())
-		if err != nil {
-			log.Println(err)
-		}
-
-		//to be removed
-		fmt.Println("product id is", string(msg.Value))
-
-		productid, err := strconv.Atoi(string(msg.Value))
-		if err != nil {
-			log.Println(err)
-		}
-
-		product, err := s.db.GetProduct(uint64(productid))
-		if err != nil {
-			log.Println(err)
-		}
-
-		var compressedimagefiles []string
-
-		for i, val := range product.ProductImages {
-
-			imagename := fmt.Sprintf("%s_%d.jpg", product.ProductName, i)
-
-			path, err := s.service.DownloadAndCompressImage(val, imagename)
-			if err != nil {
-				log.Println(err)
-			}
-
-			compressedimagefiles = append(compressedimagefiles, path)
-
-		}
-
-		updatedProduct := &model.Product{
-			ProductId:               product.ProductId,
-			CompressedProductImages: compressedimagefiles,
-			UpdatedAt:               time.Now(),
-		}
-
-		err = s.db.UpdateProduct(updatedProduct)
-		if err != nil {
-			log.Println(err)
-			return
-		}
+	msg, err := s.consumer.ReadMessage(context.Background())
+	if err != nil {
+		log.Println(err)
+		return
 	}
+
+	productid, err := strconv.Atoi(string(msg.Value))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	product, err := s.db.GetProduct(uint64(productid))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	var compressedimagefiles []string
+
+	// we can add goroutines here to handle all the urls concurrenly
+
+	for i, val := range product.ProductImages {
+
+		imagename := fmt.Sprintf("%s_%d.jpg", product.ProductName, i)
+
+		path, err := s.DownloadAndCompressImage(val, imagename, env)
+		if err != nil {
+			log.Println(err)
+		}
+
+		compressedimagefiles = append(compressedimagefiles, path)
+
+	}
+
+	updatedProduct := &model.Product{
+		ProductId:               product.ProductId,
+		CompressedProductImages: compressedimagefiles,
+		UpdatedAt:               time.Now(),
+	}
+
+	err = s.db.UpdateProduct(updatedProduct)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 }
 
-func (s *server) DownloadAndCompressImage(imageurl, imagename string) (string, error) {
+func (s *server) DownloadAndCompressImage(imageurl string, imagename string, env bool) (string, error) {
+
+	var imageLoc, compImageLoc string
+
+	if env {
+		imageLoc = imagedownload
+		compImageLoc = compressedimage
+	} else {
+		imageLoc = testimagedownload
+		compImageLoc = testcompressedimage
+	}
 
 	req, err := http.NewRequest(http.MethodGet, imageurl, nil)
 	if err != nil {
@@ -153,7 +165,7 @@ func (s *server) DownloadAndCompressImage(imageurl, imagename string) (string, e
 		return "", fmt.Errorf("HTTP request failed with status: %v", resp.Status)
 	}
 
-	filePath := filepath.Join(imagedownload, imagename)
+	filePath := filepath.Join(imageLoc, imagename)
 
 	out, err := os.Create(filePath)
 	if err != nil {
@@ -176,7 +188,7 @@ func (s *server) DownloadAndCompressImage(imageurl, imagename string) (string, e
 	}
 	defer inputFile.Close()
 
-	compfilePath := filepath.Join(compressedfile, compressedFilename)
+	compfilePath := filepath.Join(compImageLoc, compressedFilename)
 
 	outputFile, err := os.Create(compfilePath)
 	if err != nil {
@@ -197,6 +209,11 @@ func (s *server) DownloadAndCompressImage(imageurl, imagename string) (string, e
 	if err != nil {
 		fmt.Printf("Error getting absolute path: %v\n", err)
 		return "", err
+	}
+
+	if !env {
+		os.Remove(filePath)
+		os.Remove(compfilePath)
 	}
 
 	return absPath, nil
